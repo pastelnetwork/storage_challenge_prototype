@@ -33,6 +33,15 @@ class Symbol_Files(BaseModel):
     file_hash: str
     file_length_in_bytes: Optional[int] = None
     total_challenges_for_file: Optional[int] = None
+    original_file_path: Optional[str] = None
+    class Config:
+        orm_mode = True
+
+class XOR_Distance(BaseModel):
+    xor_distance_id: int
+    masternode_id: Optional[str] = None
+    file_hash: Optional[str] = None
+    xor_distance: Optional[int] = None
     class Config:
         orm_mode = True
 

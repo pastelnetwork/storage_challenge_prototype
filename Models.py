@@ -33,6 +33,14 @@ class Symbol_Files(Base):
     file_hash = Column(Text, primary_key=True, index=True)
     file_length_in_bytes = Column(Integer)
     total_challenges_for_file = Column(Integer)
+    original_file_path = Column(Text)
+
+class XOR_Distance(Base):
+    __tablename__ = 'xor_distance'
+    xor_distance_id = Column(Integer, primary_key=True) 
+    masternode_id = Column(Text, ForeignKey('masternodes.masternode_id'))
+    file_hash = Column(Text, ForeignKey('symbol_files.file_hash'))
+    xor_distance = Column(Integer)
     
 class Challenges(Base):
     __tablename__ = 'challenges'
@@ -41,10 +49,10 @@ class Challenges(Base):
     datetime_challenge_sent = Column(DateTime)   
     datetime_challenge_responded_to = Column(DateTime)   
     datetime_challenge_verified = Column(DateTime)   
-    block_hash_when_challenge_sent = Column(Text)
+    block_hash_when_challenge_sent = Column(Text, ForeignKey('pastel_blocks.block_hash'))
     challenge_response_time_in_seconds = Column(Float)
-    challenging_masternode_id = Column(Text)
-    responding_masternode_id = Column(Text)
+    challenging_masternode_id = Column(Text, ForeignKey('masternodes.masternode_id'))
+    responding_masternode_id = Column(Text, ForeignKey('masternodes.masternode_id'))
     file_hash_to_challenge = Column(Text, ForeignKey('symbol_files.file_hash'))
     challenge_slice_start_index = Column(Integer)
     challenge_slice_end_index = Column(Integer)
